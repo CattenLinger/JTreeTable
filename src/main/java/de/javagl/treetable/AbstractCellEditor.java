@@ -2,12 +2,12 @@
  * www.javagl.de - JTreeTable
  *
  * Copyright (c) 2016 Marco Hutter - http://www.javagl.de
- * 
+ *
  * This library is based on the code from the article "Creating TreeTables"
- * by Sun Microsystems (now known as Oracle). 
- * 
+ * by Sun Microsystems (now known as Oracle).
+ *
  * The original copyright header:
- *  
+ *
  * Copyright 1998 Sun Microsystems, Inc.  All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,63 +39,54 @@
  */
 package de.javagl.treetable;
 
-import java.util.EventObject;
-
-import javax.swing.CellEditor;
+import javax.swing.*;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.EventListenerList;
+import java.util.EventObject;
 
 
 /**
  * Abstract base implementation of a CellEditor for a {@link JTreeTable}.
  */
-public class AbstractCellEditor implements CellEditor
-{
+public class AbstractCellEditor implements CellEditor {
     /**
      * The list of CellEditorListeners
      */
     private final EventListenerList listenerList = new EventListenerList();
 
     @Override
-    public Object getCellEditorValue()
-    {
+    public Object getCellEditorValue() {
         return null;
     }
 
     @Override
-    public boolean isCellEditable(EventObject e)
-    {
+    public boolean isCellEditable(EventObject e) {
         return true;
     }
 
     @Override
-    public boolean shouldSelectCell(EventObject anEvent)
-    {
+    public boolean shouldSelectCell(EventObject anEvent) {
         return false;
     }
 
     @Override
-    public boolean stopCellEditing()
-    {
+    public boolean stopCellEditing() {
         return true;
     }
 
     @Override
-    public void cancelCellEditing()
-    {
+    public void cancelCellEditing() {
         // Empty default implementation
     }
 
     @Override
-    public final void addCellEditorListener(CellEditorListener l)
-    {
+    public final void addCellEditorListener(CellEditorListener l) {
         listenerList.add(CellEditorListener.class, l);
     }
 
     @Override
-    public final void removeCellEditorListener(CellEditorListener l)
-    {
+    public final void removeCellEditorListener(CellEditorListener l) {
         listenerList.remove(CellEditorListener.class, l);
     }
 
@@ -103,15 +94,12 @@ public class AbstractCellEditor implements CellEditor
      * Notify all listeners that have registered interest for notification on
      * this event type.
      */
-    protected final void fireEditingStopped()
-    {
+    protected final void fireEditingStopped() {
         Object[] listeners = listenerList.getListenerList();
-        for (int i = listeners.length - 2; i >= 0; i -= 2)
-        {
-            if (listeners[i] == CellEditorListener.class)
-            {
+        for (int i = listeners.length - 2; i >= 0; i -= 2) {
+            if (listeners[i] == CellEditorListener.class) {
                 ((CellEditorListener) listeners[i + 1])
-                    .editingStopped(new ChangeEvent(this));
+                        .editingStopped(new ChangeEvent(this));
             }
         }
     }
@@ -120,15 +108,12 @@ public class AbstractCellEditor implements CellEditor
      * Notify all listeners that have registered interest for notification on
      * this event type.
      */
-    protected final void fireEditingCanceled()
-    {
+    protected final void fireEditingCanceled() {
         Object[] listeners = listenerList.getListenerList();
-        for (int i = listeners.length - 2; i >= 0; i -= 2)
-        {
-            if (listeners[i] == CellEditorListener.class)
-            {
+        for (int i = listeners.length - 2; i >= 0; i -= 2) {
+            if (listeners[i] == CellEditorListener.class) {
                 ((CellEditorListener) listeners[i + 1])
-                    .editingCanceled(new ChangeEvent(this));
+                        .editingCanceled(new ChangeEvent(this));
             }
         }
     }
