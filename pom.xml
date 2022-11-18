@@ -1,20 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>9</version>
-    </parent>
-
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.javagl</groupId>
     <artifactId>treetable</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <name>treetable</name>
     <description>A JTreeTable</description>
     <url>https://github.com/javagl</url>
+
+    <distributionManagement>
+        <repository>
+            <id>shinonometn-repo-release</id>
+            <url>https://nexus.shinonometn.com/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>shinonometn-repo-snapshot</id>
+            <url>https://nexus.shinonometn.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <developers>
         <developer>
@@ -24,12 +28,19 @@
                 <role>developer</role>
             </roles>
         </developer>
+        <developer>
+            <name>Catten Linger</name>
+            <email>lingerkong03@gmail.com</email>
+            <roles>
+                <role>maintainer</role>
+            </roles>
+        </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:javagl/JTreeTable.git</connection>
-        <developerConnection>scm:git:git@github.com:javagl/JTreeTable.git</developerConnection>
-        <url>git@github.com:javagl/JTreeTable.git</url>
+        <connection>scm:git:git@github.com:CattenLinger/JTreeTable.git</connection>
+        <developerConnection>scm:git:git@github.com:CattenLinger/JTreeTable.git</developerConnection>
+        <url>git@github.com:CattenLinger/JTreeTable.git</url>
     </scm>
 
     <licenses>
@@ -79,6 +90,36 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!--  Skip the default deploy plugin  -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <!-- References: https://www.baeldung.com/maven-deploy-nexus  -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.8</version>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <serverId>shinonometn-public</serverId>
+                    <nexusUrl>https://nexus.shinonometn.com/</nexusUrl>
+                    <!-- See: https://github.com/sonatype/nexus-maven-plugins/blob/master/staging/maven-plugin/WORKFLOWS.md -->
+                    <skipStaging>true</skipStaging>
+                </configuration>
             </plugin>
         </plugins>
     </build>
