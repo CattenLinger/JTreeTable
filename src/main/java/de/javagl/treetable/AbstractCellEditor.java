@@ -49,14 +49,14 @@ import java.util.EventObject;
 /**
  * Abstract base implementation of a CellEditor for a {@link JTreeTable}.
  */
-public class AbstractCellEditor implements CellEditor {
+public class AbstractCellEditor<T> implements CellEditor {
     /**
      * The list of CellEditorListeners
      */
     private final EventListenerList listenerList = new EventListenerList();
 
     @Override
-    public Object getCellEditorValue() {
+    public T getCellEditorValue() {
         return null;
     }
 
